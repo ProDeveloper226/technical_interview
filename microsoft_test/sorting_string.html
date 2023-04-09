@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript HTML DOM</h2>
+
+<div id="main">
+<p>Smart people learn from everything and everyone, average people from their experience, stupid people already, have all the answers</p>
+<button name="search" onclick="Search()"> Search </button>
+
+</div>
+
+<p id="demo"></p>
+
+<script>
+
+    function Search() {
+        let x = document.getElementById("main");
+        let y = x.getElementsByTagName("p");
+        let sentence = y[0].innerHTML;
+        let filter_sentence = sentence.replace(/[^a-zA-Z/\s+]/g, '');
+        let words = filter_sentence.split(" ");
+        // let asc_len_words = words.sort((a,b) => a.length - b.length);
+
+        let max_length = Math.max(...(words.map(el => el.length)));
+        let max_length_words = [];
+
+
+        for(let i = 0; i < words.length; i++) {
+            if(words[i].length == max_length) {
+                max_length_words.push(words[i]);
+            }
+        }
+
+        let vowels_count = countVowel(max_length_words[0]);
+        let final_result = max_length_words[0];
+
+        if ( max_length_words.length == 1 ) {
+            document.getElementById("demo").innerHTML = max_length_words[0];    
+        }
+        else if ( max_length_words.length >= 2) {
+             
+            for ( let j = 0; j < max_length_words.length; j++ ) {
+                if(countVowel(max_length_words[j]) > vowels_count ) {
+                    vowels_count = countVowel(max_length_words[j]);
+                    final_result = max_length_words[j];
+                }
+            }
+
+        }
+
+        document.getElementById("demo").innerHTML = final_result;
+        
+    }
+
+    function countVowel(str) { 
+
+        // find the count of vowels
+        const count = str.match(/[aeiou]/gi).length;
+
+        // return number of vowels
+        return count;
+    }   
+
+    
+    
+</script>
+
+</body>
+</html>
